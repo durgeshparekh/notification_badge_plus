@@ -72,6 +72,3 @@
 
 - **🔧 Fixed iOS compilation errors** - Resolved Swift compiler errors by removing non-existent `getBadgeCount` API calls
 - **📱 Improved iOS compatibility** - Use `UIApplication.applicationIconBadgeNumber` for consistent badge retrieval across all iOS versions
-- **🧹 Package cleanup** - Removed development artifacts and unnecessary files for cleaner package publishing
-- **📦 Example app improvements** - Updated constructor to use `super.key` parameter and cleaned up dependencies
-- **✅ Production ready** - Package is now fully tested and ready for production use on both iOS and Android
