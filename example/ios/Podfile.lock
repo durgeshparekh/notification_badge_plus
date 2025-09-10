@@ -1,0 +1,22 @@
+PODS:
+  - Flutter (1.0.0)
+  - notification_badge_plus (1.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - notification_badge_plus (from `.symlinks/plugins/notification_badge_plus/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  notification_badge_plus:
+    :path: ".symlinks/plugins/notification_badge_plus/ios"
+
+SPEC CHECKSUMS:
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  notification_badge_plus: 67edaef0b91f3f893237a49e717eb8cc11754c1b
+
+PODFILE CHECKSUM: 4305caec6b40dde0ae97be1573c53de1882a07e5
+
+COCOAPODS: 1.16.2

@@ -99,35 +99,17 @@ public class NotificationBadgePlugin: NSObject, FlutterPlugin {
     private func getBadgeCount(result: @escaping FlutterResult) {
         log("getBadgeCount method executing")
         
-        if #available(iOS 16.0, *) {
-            log("Using iOS 16+ UNUserNotificationCenter API to get badge count")
-            UNUserNotificationCenter.current().getBadgeCount { count in
-                DispatchQueue.main.async {
-                    let badgeCount = Int(count)
-                    self.log("getBadgeCount result (iOS 16+): \(badgeCount)")
-                    result(badgeCount)
-                }
-            }
-        } else {
-            log("Using legacy UIApplication API to get badge count")
-            DispatchQueue.main.async {
-                let badgeCount = UIApplication.shared.applicationIconBadgeNumber
-                self.log("getBadgeCount result (legacy): \(badgeCount)")
-                result(badgeCount)
-            }
+        DispatchQueue.main.async {
+            let badgeCount = UIApplication.shared.applicationIconBadgeNumber
+            self.log("getBadgeCount result: \(badgeCount)")
+            result(badgeCount)
         }
     }
     
     @objc private func applicationDidBecomeActive() {
         // App became active - sync badge count if needed
         DispatchQueue.main.async {
-            if #available(iOS 16.0, *) {
-                UNUserNotificationCenter.current().getBadgeCount { count in
-                    self.currentBadgeCount = Int(count)
-                }
-            } else {
-                self.currentBadgeCount = UIApplication.shared.applicationIconBadgeNumber
-            }
+            self.currentBadgeCount = UIApplication.shared.applicationIconBadgeNumber
         }
     }
     
