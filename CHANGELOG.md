@@ -67,3 +67,11 @@
 - Replaced all instances of "OEM" with "manufacturer" for clarity and consistency across documentation and code.
 - Enhanced logging in Dart, Android (Kotlin), and iOS (Swift) code to improve workflow visibility in debug mode.
 - Documentation updated to reflect terminology and logging improvements
+
+## 1.0.2
+
+- **🔧 Fixed iOS compilation errors** - Resolved Swift compiler errors by removing non-existent `getBadgeCount` API calls
+- **📱 Improved iOS compatibility** - Use `UIApplication.applicationIconBadgeNumber` for consistent badge retrieval across all iOS versions
+- **🧹 Package cleanup** - Removed development artifacts and unnecessary files for cleaner package publishing
+- **📦 Example app improvements** - Updated constructor to use `super.key` parameter and cleaned up dependencies
+- **✅ Production ready** - Package is now fully tested and ready for production use on both iOS and Android
