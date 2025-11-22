@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'notification_badge_plus'
-  s.version          = '1.0.1'
+  s.version          = '1.0.3'
   s.summary          = 'A Flutter plugin for displaying notification badges on app icons.'
   s.description      = <<-DESC
 A Flutter plugin for displaying notification badges on app icons with comprehensive Android manufacturer support and iOS compatibility.

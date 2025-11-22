@@ -72,3 +72,9 @@
 
 - **🔧 Fixed iOS compilation errors** - Resolved Swift compiler errors by removing non-existent `getBadgeCount` API calls
 - **📱 Improved iOS compatibility** - Use `UIApplication.applicationIconBadgeNumber` for consistent badge retrieval across all iOS versions
+
+## 1.0.3
+
+- **📦 Added Swift Package Manager (SPM) support** - Added `Package.swift` file to enable Swift Package Manager compatibility for iOS
+- **✨ Improved package scoring** - Package now meets pub.dev requirements for SPM support, improving overall package score
+- **🔧 iOS build system enhancement** - Package can now be used with both CocoaPods and Swift Package Manager

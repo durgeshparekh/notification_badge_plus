@@ -51,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
-    
+
     if (state == AppLifecycleState.resumed) {
       // App came to foreground - refresh badge count
       _refreshBadgeCount();
@@ -68,9 +68,9 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         _isSupported = isSupported;
         _manufacturer = manufacturer;
         _badgeCount = currentCount;
-        _status = isSupported 
-          ? 'Badge support: Available' 
-          : 'Badge support: Not available';
+        _status = isSupported
+            ? 'Badge support: Available'
+            : 'Badge support: Not available';
       });
     } catch (e) {
       setState(() {

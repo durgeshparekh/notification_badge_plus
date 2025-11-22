@@ -6,10 +6,10 @@ import 'package:flutter/services.dart';
 
 class NotificationBadgePlus {
   static const MethodChannel _channel = MethodChannel('notification_badge');
-  
+
   /// Enable or disable debug logging
   static bool enableLogging = kDebugMode;
-  
+
   static void _log(String message) {
     if (enableLogging) {
       if (kDebugMode) {
@@ -22,12 +22,12 @@ class NotificationBadgePlus {
   /// Returns true if successful, false otherwise
   static Future<bool> setBadgeCount(int count) async {
     _log('setBadgeCount called with count: $count');
-    
+
     if (count < 0) {
       _log('Error: Badge count cannot be negative: $count');
       throw ArgumentError('Badge count cannot be negative');
     }
-    
+
     try {
       _log('Invoking native setBadgeCount method...');
       final result = await _channel.invokeMethod(
@@ -50,7 +50,7 @@ class NotificationBadgePlus {
   /// Returns the current badge count, or 0 if unable to retrieve
   static Future<int> getBadgeCount() async {
     _log('getBadgeCount called');
-    
+
     try {
       _log('Invoking native getBadgeCount method...');
       final result = await _channel.invokeMethod<int>('getBadgeCount');
@@ -77,7 +77,7 @@ class NotificationBadgePlus {
   /// Returns true if supported, false otherwise
   static Future<bool> isSupported() async {
     _log('isSupported called');
-    
+
     try {
       _log('Invoking native isSupported method...');
       final result = await _channel.invokeMethod('isSupported');
@@ -97,7 +97,7 @@ class NotificationBadgePlus {
   /// Returns the new badge count, or current count if failed
   static Future<int> incrementBadge() async {
     _log('incrementBadge called');
-    
+
     try {
       final currentCount = await getBadgeCount();
       _log('Current badge count before increment: $currentCount');
@@ -119,7 +119,7 @@ class NotificationBadgePlus {
   /// Returns the new badge count, or current count if failed
   static Future<int> decrementBadge() async {
     _log('decrementBadge called');
-    
+
     try {
       final currentCount = await getBadgeCount();
       _log('Current badge count before decrement: $currentCount');
@@ -142,12 +142,12 @@ class NotificationBadgePlus {
   /// Returns manufacturer name, or empty string if not available
   static Future<String> getDeviceManufacturer() async {
     _log('getDeviceManufacturer called');
-    
+
     if (!Platform.isAndroid) {
       _log('Not Android platform, returning empty string');
       return '';
     }
-    
+
     try {
       _log('Invoking native getDeviceManufacturer method...');
       final result = await _channel.invokeMethod<String>(
