@@ -167,8 +167,8 @@ class NotificationBadgePlus {
 
   /// Checks if the app has notification permissions (specifically for badges)
   /// On iOS, this checks if the user has granted notification permissions.
-  /// On Android, this currently always returns true as background badge 
-  /// management doesn't usually require explicit user permission beyond notification state.
+  /// management doesn't usually require explicit user permission beyond 
+  /// notification state.
   static Future<bool> checkPermissions() async {
     _log('checkPermissions called');
 
