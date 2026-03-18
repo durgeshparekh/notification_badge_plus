@@ -36,7 +36,7 @@ Add this to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  notification_badge_plus: ^1.0.0
+  notification_badge_plus: ^1.0.4
 ```
 
 ## Usage
@@ -186,7 +186,7 @@ void main() async {
 
 ### Android Requirements
 - **Minimum SDK**: Android 16 (API level 16)
-- **Target SDK**: Android 34
+- **Target SDK**: Android 35
 - **Permissions**: All required permissions are automatically included
 
 ### iOS Requirements

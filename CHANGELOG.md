@@ -78,3 +78,9 @@
 - **📦 Added Swift Package Manager (SPM) support** - Added `Package.swift` file to enable Swift Package Manager compatibility for iOS
 - **✨ Improved package scoring** - Package now meets pub.dev requirements for SPM support, improving overall package score
 - **🔧 iOS build system enhancement** - Package can now be used with both CocoaPods and Swift Package Manager
+
+## 1.0.4
+
+- **🔧 Fixed Android Namespace Issue** - Resolved build failure by adding explicit `namespace` to `android/build.gradle` for AGP 8.0+ compatibility.
+- **📱 Improved Android SDK Support** - Upgraded `compileSdkVersion` to 35 and updated `JavaVersion` to 11 for better compatibility with modern Android development environments.
+- **🧹 Cleaned up Android Manifest** - Removed legacy `package` attribute from `AndroidManifest.xml` as per modern Android guidelines.
