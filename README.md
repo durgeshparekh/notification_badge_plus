@@ -36,7 +36,7 @@ Add this to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  notification_badge_plus: ^1.0.4
+  notification_badge_plus: ^1.0.5
 ```
 
 ## Usage

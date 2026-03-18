@@ -83,4 +83,8 @@
 
 - **🔧 Fixed Android Namespace Issue** - Resolved build failure by adding explicit `namespace` to `android/build.gradle` for AGP 8.0+ compatibility.
 - **📱 Improved Android SDK Support** - Upgraded `compileSdkVersion` to 35 and updated `JavaVersion` to 11 for better compatibility with modern Android development environments.
-- **🧹 Cleaned up Android Manifest** - Removed legacy `package` attribute from `AndroidManifest.xml` as per modern Android guidelines.
+
+## 1.0.5
+
+- **Verified repository URL** - Finalized repository links and verified for production deployment.
+- **Improved documentation** - Updated README and package metadata for better clarity and production readiness.
