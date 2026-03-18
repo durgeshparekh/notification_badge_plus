@@ -1,3 +1,11 @@
+
+## 1.0.6
+
+- **✨ Added iOS Permission Helpers** - Added `checkPermissions()` and `requestPermissions()` to handle iOS notification badge permissions easily.
+- **🔧 Fixed Podspec Versioning** - Updated `notification_badge_plus.podspec` to match the current package version and repository URL.
+- **📚 Improved iOS Documentation** - Updated README with instructions and examples for handling iOS permissions.
+
+
 ## 1.0.0
 
 - **Initial release of notification_badge_plus package**

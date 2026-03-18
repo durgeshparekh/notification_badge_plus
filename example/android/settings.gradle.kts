@@ -1,3 +1,5 @@
+rootProject.name = "notification_badge_plus_example"
+
 pluginManagement {
     val flutterSdkPath =
         run {

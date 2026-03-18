@@ -36,7 +36,7 @@ Add this to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  notification_badge_plus: ^1.0.5
+  notification_badge_plus: ^1.0.6
 ```
 
 ## Usage
@@ -59,11 +59,16 @@ await NotificationBadgePlus.clearBadge();
 int newCount = await NotificationBadgePlus.incrementBadge();
 int decrementedCount = await NotificationBadgePlus.decrementBadge();
 
-// Check if badges are supported on this device
-bool isSupported = await NotificationBadgePlus.isSupported();
-
 // Get device manufacturer (Android only)
 String manufacturer = await NotificationBadgePlus.getDeviceManufacturer();
+
+// Check notification permissions (Required for iOS)
+bool hasPermission = await NotificationBadgePlus.checkPermissions();
+
+// Request notification permissions
+if (!hasPermission) {
+  bool granted = await NotificationBadgePlus.requestPermissions();
+}
 ```
 
 ### Advanced Usage with Error Handling
@@ -233,7 +238,15 @@ print('Device manufacturer: $manufacturer');
 
 ### iOS Badge Not Showing
 
-1. **Check Notification Permissions**: iOS requires notification permissions for badges:
+1. **Check Notification Permissions**: iOS requires notification permissions for badges. You can use the built-in methods:
+```dart
+bool hasPermission = await NotificationBadgePlus.checkPermissions();
+if (!hasPermission) {
+  await NotificationBadgePlus.requestPermissions();
+}
+```
+
+Alternatively, you can use the `permission_handler` package:
 ```dart
 // Request notification permissions
 import 'package:permission_handler/permission_handler.dart';

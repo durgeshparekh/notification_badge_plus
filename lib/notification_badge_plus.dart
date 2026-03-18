@@ -164,4 +164,49 @@ class NotificationBadgePlus {
       return '';
     }
   }
+
+  /// Checks if the app has notification permissions (specifically for badges)
+  /// On iOS, this checks if the user has granted notification permissions.
+  /// On Android, this currently always returns true as background badge 
+  /// management doesn't usually require explicit user permission beyond notification state.
+  static Future<bool> checkPermissions() async {
+    _log('checkPermissions called');
+
+    if (Platform.isAndroid) {
+      return true;
+    }
+
+    try {
+      _log('Invoking native checkPermissions method...');
+      final result = await _channel.invokeMethod('checkPermissions');
+      final authorized = result == true;
+      _log('checkPermissions result: $authorized');
+      return authorized;
+    } catch (e) {
+      _log('checkPermissions failed with error: $e');
+      return false;
+    }
+  }
+
+  /// Requests notification permissions (including badges)
+  /// This is highly recommended for iOS before attempting to set badges.
+  /// Returns true if permission was granted or if on Android.
+  static Future<bool> requestPermissions() async {
+    _log('requestPermissions called');
+
+    if (Platform.isAndroid) {
+      return true;
+    }
+
+    try {
+      _log('Invoking native requestPermissions method...');
+      final result = await _channel.invokeMethod('requestPermissions');
+      final granted = result == true;
+      _log('requestPermissions result: $granted');
+      return granted;
+    } catch (e) {
+      _log('requestPermissions failed with error: $e');
+      return false;
+    }
+  }
 }
