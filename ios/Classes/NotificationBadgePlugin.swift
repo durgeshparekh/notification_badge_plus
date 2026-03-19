@@ -47,6 +47,12 @@ public class NotificationBadgePlugin: NSObject, FlutterPlugin {
         case "getDeviceManufacturer":
             log("getDeviceManufacturer method called")
             result("Apple")
+        case "checkPermissions":
+            log("checkPermissions method called")
+            checkPermissions(result: result)
+        case "requestPermissions":
+            log("requestPermissions method called")
+            requestPermissions(result: result)
         default:
             log("Unimplemented method called: \(call.method)")
             result(FlutterMethodNotImplemented)
@@ -103,6 +109,44 @@ public class NotificationBadgePlugin: NSObject, FlutterPlugin {
             let badgeCount = UIApplication.shared.applicationIconBadgeNumber
             self.log("getBadgeCount result: \(badgeCount)")
             result(badgeCount)
+        }
+    }
+    
+    private func checkPermissions(result: @escaping FlutterResult) {
+        if #available(iOS 10.0, *) {
+            UNUserNotificationCenter.current().getNotificationSettings { settings in
+                let authorized = settings.authorizationStatus == .authorized || 
+                               settings.authorizationStatus == .provisional
+                self.log("checkPermissions result: \(authorized)")
+                result(authorized)
+            }
+        } else {
+            // iOS 9 fallback
+            let settings = UIApplication.shared.currentUserNotificationSettings
+            let authorized = settings?.types.contains(.badge) ?? false
+            self.log("checkPermissions (iOS 9) result: \(authorized)")
+            result(authorized)
+        }
+    }
+    
+    private func requestPermissions(result: @escaping FlutterResult) {
+        if #available(iOS 10.0, *) {
+            let options: UNAuthorizationOptions = [.badge, .alert, .sound]
+            UNUserNotificationCenter.current().requestAuthorization(options: options) { granted, error in
+                if let error = error {
+                    self.log("requestPermissions failed: \(error.localizedDescription)")
+                    result(false)
+                } else {
+                    self.log("requestPermissions result: \(granted)")
+                    result(granted)
+                }
+            }
+        } else {
+            // iOS 9 fallback
+            let settings = UIUserNotificationSettings(types: [.badge, .alert, .sound], categories: nil)
+            UIApplication.shared.registerUserNotificationSettings(settings)
+            self.log("requestPermissions (iOS 9) called")
+            result(true) // Cannot easily check result on iOS 9 synchronously
         }
     }
     

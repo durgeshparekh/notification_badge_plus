@@ -1,6 +1,6 @@
 PODS:
   - Flutter (1.0.0)
-  - notification_badge_plus (1.0.1):
+  - notification_badge_plus (1.0.6):
     - Flutter
 
 DEPENDENCIES:
@@ -14,9 +14,9 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/notification_badge_plus/ios"
 
 SPEC CHECKSUMS:
-  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  notification_badge_plus: 67edaef0b91f3f893237a49e717eb8cc11754c1b
+  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
+  notification_badge_plus: 87b2b0c5d89e4ccc30399014985baf38d8a18b4b
 
-PODFILE CHECKSUM: 4305caec6b40dde0ae97be1573c53de1882a07e5
+PODFILE CHECKSUM: 3c63482e143d1b91d2d2560aee9fb04ecc74ac7e
 
 COCOAPODS: 1.16.2
