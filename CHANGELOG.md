@@ -1,3 +1,11 @@
+## 1.0.7
+
+**Release date:** 2026-05-01
+
+- **🐛 Fixed extra Android notification category** - Removed the Oreo fallback provider that created a synthetic "Badge Count" notification/channel and caused duplicate badge entries.
+- **🔧 Updated Xiaomi badge strategy** - Switched from notification-based MIUI badge updates to launcher broadcast/provider updates so badge changes no longer create user-visible helper notifications.
+- **📚 Docs & polish** - Corrected README troubleshooting samples (`NotificationBadgePlus`), aligned background guide with non-notification MIUI behavior, avoided duplicate OPPO/OnePlus broadcasts, updated Nova Launcher package lookup for Android 13+, unified Dart error log prefix.
+
 ## 1.0.0
 
 - **Initial release of notification_badge_plus package**

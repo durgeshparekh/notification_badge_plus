@@ -1,6 +1,6 @@
 name: notification_badge_plus
 description: A Flutter plugin for displaying notification badges on app icons with comprehensive Android manufacturer support and iOS compatibility.
-version: 1.0.6
+version: 1.0.7
 homepage: https://github.com/durgeshparekh/notification_badge_plus
 repository: https://github.com/durgeshparekh/notification_badge_plus
 issue_tracker: https://github.com/durgeshparekh/notification_badge_plus/issues

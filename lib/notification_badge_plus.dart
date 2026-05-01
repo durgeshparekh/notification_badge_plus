@@ -40,7 +40,7 @@ class NotificationBadgePlus {
     } catch (e) {
       _log('setBadgeCount failed with error: $e');
       if (kDebugMode) {
-        print('NotificationBadge: Failed to set badge count: $e');
+        print('NotificationBadgePlus: Failed to set badge count: $e');
       }
       return false;
     }
@@ -60,7 +60,7 @@ class NotificationBadgePlus {
     } catch (e) {
       _log('getBadgeCount failed with error: $e');
       if (kDebugMode) {
-        print('NotificationBadge: Failed to get badge count: $e');
+        print('NotificationBadgePlus: Failed to get badge count: $e');
       }
       return 0;
     }
@@ -87,7 +87,7 @@ class NotificationBadgePlus {
     } catch (e) {
       _log('isSupported failed with error: $e');
       if (kDebugMode) {
-        print('NotificationBadge: Failed to check support: $e');
+        print('NotificationBadgePlus: Failed to check support: $e');
       }
       return false;
     }
@@ -109,7 +109,7 @@ class NotificationBadgePlus {
     } catch (e) {
       _log('incrementBadge failed with error: $e');
       if (kDebugMode) {
-        print('NotificationBadge: Failed to increment badge: $e');
+        print('NotificationBadgePlus: Failed to increment badge: $e');
       }
       return await getBadgeCount();
     }
@@ -132,7 +132,7 @@ class NotificationBadgePlus {
     } catch (e) {
       _log('decrementBadge failed with error: $e');
       if (kDebugMode) {
-        print('NotificationBadge: Failed to decrement badge: $e');
+        print('NotificationBadgePlus: Failed to decrement badge: $e');
       }
       return await getBadgeCount();
     }
@@ -159,7 +159,7 @@ class NotificationBadgePlus {
     } catch (e) {
       _log('getDeviceManufacturer failed with error: $e');
       if (kDebugMode) {
-        print('NotificationBadge: Failed to get device manufacturer: $e');
+        print('NotificationBadgePlus: Failed to get device manufacturer: $e');
       }
       return '';
     }

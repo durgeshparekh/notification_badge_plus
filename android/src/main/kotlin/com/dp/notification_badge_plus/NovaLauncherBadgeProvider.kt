@@ -3,6 +3,7 @@ package com.dp.notification_badge_plus
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 
 class NovaLauncherBadgeProvider(private val context: Context) : BadgeProvider {
     
@@ -32,7 +33,15 @@ class NovaLauncherBadgeProvider(private val context: Context) : BadgeProvider {
 
     private fun isPackageInstalled(packageName: String): Boolean {
         return try {
-            context.packageManager.getPackageInfo(packageName, 0)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                context.packageManager.getPackageInfo(
+                    packageName,
+                    PackageManager.PackageInfoFlags.of(0)
+                )
+            } else {
+                @Suppress("DEPRECATION")
+                context.packageManager.getPackageInfo(packageName, 0)
+            }
             true
         } catch (e: PackageManager.NameNotFoundException) {
             false
