@@ -6,7 +6,7 @@ A comprehensive Flutter plugin for displaying notification badges on app icons w
 
 ### 🚀 Comprehensive Android Support
 - **Samsung**: Native BadgeProvider integration for all Samsung devices
-- **Xiaomi/Redmi/POCO**: Notification-based badge implementation optimized for MIUI
+- **Xiaomi/Redmi/POCO**: MIUI launcher badge updates (no helper notifications)
 - **Huawei/Honor**: EMUI-compatible badge system with broadcast support
 - **OPPO/OnePlus/Realme**: ColorOS and OxygenOS launcher integration
 - **Vivo/iQOO**: FuntouchOS badge support
@@ -14,7 +14,6 @@ A comprehensive Flutter plugin for displaying notification badges on app icons w
 - **HTC**: Sense UI badge support
 - **LG**: LG UX launcher compatibility
 - **Nova Launcher**: TeslaUnread integration
-- **Android Oreo+**: Native notification badges for stock Android
 
 ### 🍎 Full iOS Support
 - **iOS 9.0+**: Complete compatibility across all iOS versions
@@ -36,7 +35,7 @@ Add this to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  notification_badge_plus: ^1.0.6
+  notification_badge_plus: ^1.0.7
 ```
 
 ## Usage
@@ -205,7 +204,7 @@ void main() async {
 Uses Samsung's native BadgeProvider content resolver system. Supports both old and new Samsung devices with automatic fallback methods.
 
 ### Xiaomi Devices (MIUI)
-Implements notification-based badges optimized for MIUI. Creates low-priority notifications that enable badge display without disturbing the user.
+Uses MIUI launcher broadcasts/content-provider updates to set badge counts without creating extra "Badge Count" notifications or channels.
 
 ### Huawei Devices (EMUI)
 Utilizes Huawei's badge provider and broadcast system. Compatible with various EMUI versions.
@@ -222,7 +221,7 @@ Comprehensive support for Sony, HTC, LG, and Vivo devices using their respective
 
 1. **Check Device Support**:
 ```dart
-bool supported = await NotificationBadge.isSupported();
+bool supported = await NotificationBadgePlus.isSupported();
 if (!supported) {
   print('Badges not supported on this device');
 }
@@ -230,7 +229,7 @@ if (!supported) {
 
 2. **Check Manufacturer**:
 ```dart
-String manufacturer = await NotificationBadge.getDeviceManufacturer();
+String manufacturer = await NotificationBadgePlus.getDeviceManufacturer();
 print('Device manufacturer: $manufacturer');
 ```
 

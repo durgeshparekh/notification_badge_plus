@@ -115,12 +115,18 @@ context.contentResolver.insert(uri, contentValues)
 
 **Xiaomi Devices:**
 ```kotlin
-// Uses notifications - requires notification channel
-val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-    .setNumber(count)
-    .setBadgeIconType(NotificationCompat.BADGE_ICON_SMALL)
-    .build()
-notificationManager.notify(NOTIFICATION_ID, notification)
+// Launcher broadcast + MIUI content-provider fallback (no synthetic notifications)
+val intent = Intent("android.intent.action.APPLICATION_MESSAGE_UPDATE").apply {
+    putExtra(
+        "android.intent.extra.update_application_component_name",
+        "${packageName}/${launcherActivityClass}"
+    )
+    putExtra(
+        "android.intent.extra.update_application_message_text",
+        if (count <= 0) "" else count.toString()
+    )
+}
+context.sendBroadcast(intent)
 ```
 
 **Other Manufacturers:**
@@ -485,14 +491,6 @@ Future<void> platformSpecificBadgeHandling(int count) async {
     // iOS: Badge updates work reliably in background
     await NotificationBadgePlus.setBadgeCount(count);
   } else if (Platform.isAndroid) {
-    // Android: Check manufacturer and adjust strategy
-    final manufacturer = await NotificationBadgePlus.getDeviceManufacturer();
-    
-    if (manufacturer.toLowerCase().contains('xiaomi')) {
-      // Xiaomi: Ensure notification channel is created
-      await _ensureNotificationChannel();
-    }
-    
     await NotificationBadgePlus.setBadgeCount(count);
   }
 }
@@ -529,11 +527,15 @@ Future<void> syncBadgeOnAppResume() async {
 
 **Solution**:
 ```dart
-// For Xiaomi devices, ensure persistent notification
-if (manufacturer.contains('xiaomi')) {
-  // Create ongoing notification to maintain badge
-  await _createPersistentNotification(badgeCount);
+// Xiaomi/MIUI: the plugin updates the launcher badge via broadcast/provider (no helper notification).
+// If the badge still fails, check MIUI app icon badge permission and launcher notification settings.
+final manufacturer = (await NotificationBadgePlus.getDeviceManufacturer()).toLowerCase();
+if (manufacturer.contains('xiaomi') ||
+    manufacturer.contains('redmi') ||
+    manufacturer.contains('poco')) {
+  // Optionally verify NotificationBadgePlus.isSupported() and OEM badge toggles in system Settings.
 }
+await NotificationBadgePlus.setBadgeCount(badgeCount);
 ```
 
 #### 2. Badge Count Mismatch After App Resume

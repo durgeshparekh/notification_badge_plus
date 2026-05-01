@@ -1,18 +1,11 @@
 package com.dp.notification_badge_plus
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.os.Build
-import androidx.core.app.NotificationCompat
+import android.os.Bundle
 
 class XiaomiBadgeProvider(private val context: Context) : BadgeProvider {
-    
-    companion object {
-        private const val CHANNEL_ID = "badge_notification_channel"
-        private const val NOTIFICATION_ID = 1001
-    }
-
     override fun isSupported(): Boolean {
         val manufacturer = Build.MANUFACTURER.lowercase()
         return manufacturer.contains("xiaomi") || 
@@ -23,43 +16,21 @@ class XiaomiBadgeProvider(private val context: Context) : BadgeProvider {
 
     override fun setBadgeCount(count: Int): Boolean {
         return try {
-            val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            
-            // Create notification channel for Android O and above
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val channel = NotificationChannel(
-                    CHANNEL_ID,
-                    "Badge Notifications",
-                    NotificationManager.IMPORTANCE_LOW
-                ).apply {
-                    description = "Notifications for app badge count"
-                    setShowBadge(true)
-                }
-                notificationManager.createNotificationChannel(channel)
+            // MIUI launcher badge update without creating notifications.
+            val intent = Intent("android.intent.action.APPLICATION_MESSAGE_UPDATE").apply {
+                putExtra(
+                    "android.intent.extra.update_application_component_name",
+                    "${context.packageName}/${getLauncherActivityClass()}"
+                )
+                putExtra(
+                    "android.intent.extra.update_application_message_text",
+                    if (count <= 0) "" else count.toString()
+                )
             }
-            
-            if (count > 0) {
-                // Create notification with badge
-                val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-                    .setSmallIcon(android.R.drawable.ic_notification_overlay)
-                    .setContentTitle("Badge Count")
-                    .setContentText("You have $count notifications")
-                    .setNumber(count)
-                    .setBadgeIconType(NotificationCompat.BADGE_ICON_SMALL)
-                    .setAutoCancel(false)
-                    .setOngoing(true)
-                    .setPriority(NotificationCompat.PRIORITY_MIN)
-                    .build()
-                
-                notificationManager.notify(NOTIFICATION_ID, notification)
-            } else {
-                // Clear notification when count is 0
-                notificationManager.cancel(NOTIFICATION_ID)
-            }
-            
+            context.sendBroadcast(intent)
             true
-        } catch (e: Exception) {
-            false
+        } catch (_: Exception) {
+            tryViaMiuiContentProvider(count)
         }
     }
 
@@ -71,5 +42,29 @@ class XiaomiBadgeProvider(private val context: Context) : BadgeProvider {
         } catch (e: Exception) {
             false
         }
+    }
+
+    private fun tryViaMiuiContentProvider(count: Int): Boolean {
+        return try {
+            val bundle = Bundle().apply {
+                putString("package", context.packageName)
+                putString("class", getLauncherActivityClass())
+                putInt("badgenumber", count)
+            }
+            context.contentResolver.call(
+                android.net.Uri.parse("content://com.miui.home.launcher.provider"),
+                "setAppBadgeCount",
+                null,
+                bundle
+            )
+            true
+        } catch (_: Exception) {
+            false
+        }
+    }
+
+    private fun getLauncherActivityClass(): String {
+        val launchIntent = context.packageManager.getLaunchIntentForPackage(context.packageName)
+        return launchIntent?.component?.className ?: ""
     }
 }

@@ -9,7 +9,8 @@ class OppoBadgeProvider(private val context: Context) : BadgeProvider {
     
     override fun isSupported(): Boolean {
         val manufacturer = Build.MANUFACTURER.lowercase()
-        return manufacturer.contains("oppo") || manufacturer.contains("oneplus") || manufacturer.contains("realme")
+        // OnePlus is handled by OnePlusBadgeProvider; avoid duplicate broadcasts on OnePlus devices.
+        return manufacturer.contains("oppo") || manufacturer.contains("realme")
     }
 
     override fun setBadgeCount(count: Int): Boolean {

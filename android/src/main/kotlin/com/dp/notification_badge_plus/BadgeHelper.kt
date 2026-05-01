@@ -17,8 +17,7 @@ class BadgeHelper(private val context: Context) {
         SonyBadgeProvider(context),
         HTCBadgeProvider(context),
         LGBadgeProvider(context),
-        NovaLauncherBadgeProvider(context),
-        AndroidOreoDefaultBadgeProvider(context)
+        NovaLauncherBadgeProvider(context)
     )
 
     fun setBadgeCount(count: Int): Boolean {
