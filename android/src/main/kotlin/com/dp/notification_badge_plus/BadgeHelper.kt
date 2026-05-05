@@ -2,7 +2,6 @@ package com.dp.notification_badge_plus
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.os.Build
 import android.util.Log
 
 class BadgeHelper(private val context: Context) {
@@ -22,7 +21,11 @@ class BadgeHelper(private val context: Context) {
 
     fun setBadgeCount(count: Int): Boolean {
         Log.d("NotificationBadgePlus", "setBadgeCount called with count: $count")
-        
+
+        // Defensive: if the user upgraded from an older plugin version that
+        // posted helper notifications, remove them on every set call. Cheap.
+        LegacyBadgeNotificationCleaner.cleanup(context)
+
         try {
             // Store the count in SharedPreferences for persistence
             prefs.edit().putInt("badge_count", count).apply()

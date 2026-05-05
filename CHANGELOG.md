@@ -1,3 +1,10 @@
+## 1.0.8
+
+**Release date:** 2026-05-05
+
+- **🧹 Auto-cleanup of legacy badge notification artifacts** - Added `LegacyBadgeNotificationCleaner` that deletes the stale `App Badge Notifications` / `Badge Notifications` channels and cancels lingering "Badge Count" helper notifications left by plugin versions ≤ 1.0.6. Runs automatically on plugin start and before every `setBadgeCount` call.
+- **🧰 New `cleanLegacyBadgeNotifications()` API** - Exposes the cleanup explicitly so apps can trigger it on demand (e.g. during a migration step). No-op on iOS.
+
 ## 1.0.7
 
 **Release date:** 2026-05-01

@@ -20,6 +20,11 @@ class NotificationBadgePlugin: FlutterPlugin, MethodCallHandler {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "notification_badge")
         channel.setMethodCallHandler(this)
         context = flutterPluginBinding.applicationContext
+
+        // Remove any stale "App Badge Notifications" / "Badge Count" artifacts left
+        // behind by older plugin versions before initializing the helper.
+        LegacyBadgeNotificationCleaner.cleanup(context)
+
         badgeHelper = BadgeHelper(context)
         Log.d("NotificationBadgePlus", "Badge helper initialized. Device: ${Build.MANUFACTURER} ${Build.MODEL}")
     }
@@ -52,6 +57,11 @@ class NotificationBadgePlugin: FlutterPlugin, MethodCallHandler {
                 val manufacturer = Build.MANUFACTURER
                 Log.d("NotificationBadgePlus", "getDeviceManufacturer result: $manufacturer")
                 result.success(manufacturer)
+            }
+            "cleanLegacyBadgeNotifications" -> {
+                Log.d("NotificationBadgePlus", "cleanLegacyBadgeNotifications method called")
+                LegacyBadgeNotificationCleaner.cleanup(context)
+                result.success(true)
             }
             else -> {
                 Log.w("NotificationBadgePlus", "Unimplemented method called: ${call.method}")

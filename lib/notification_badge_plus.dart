@@ -165,10 +165,13 @@ class NotificationBadgePlus {
     }
   }
 
-  /// Checks if the app has notification permissions (specifically for badges)
-  /// On iOS, this checks if the user has granted notification permissions.
-  /// management doesn't usually require explicit user permission beyond 
-  /// notification state.
+  /// Checks whether the app has the OS-level permissions needed to show badges.
+  ///
+  /// On iOS, this returns whether the user has granted notification
+  /// authorization (badges require notification permission).
+  ///
+  /// On Android, badge updates do not require runtime permission, so this
+  /// always returns `true`.
   static Future<bool> checkPermissions() async {
     _log('checkPermissions called');
 
@@ -206,6 +209,36 @@ class NotificationBadgePlus {
       return granted;
     } catch (e) {
       _log('requestPermissions failed with error: $e');
+      return false;
+    }
+  }
+
+  /// Removes any "App Badge Notifications" / "Badge Count" notification
+  /// channels and posted helper notifications that may have been created by
+  /// plugin versions ≤ 1.0.6 (the only versions that ever posted such
+  /// notifications). Safe to call on any version.
+  ///
+  /// The plugin runs this automatically on plugin attach and before every
+  /// `setBadgeCount` call (Android only). You can also invoke it manually,
+  /// e.g. as part of a migration step in your app.
+  ///
+  /// No-op on iOS. Returns `true` if the cleanup ran (Android) or was skipped
+  /// (iOS), and `false` on unexpected errors.
+  static Future<bool> cleanLegacyBadgeNotifications() async {
+    _log('cleanLegacyBadgeNotifications called');
+
+    if (!Platform.isAndroid) {
+      return true;
+    }
+
+    try {
+      final result =
+          await _channel.invokeMethod('cleanLegacyBadgeNotifications');
+      final success = result == true;
+      _log('cleanLegacyBadgeNotifications result: $success');
+      return success;
+    } catch (e) {
+      _log('cleanLegacyBadgeNotifications failed with error: $e');
       return false;
     }
   }
